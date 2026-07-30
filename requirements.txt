@@ -1,0 +1,7 @@
+kafka-python
+pymongo
+minio
+pandas
+scikit-learn
+joblib
+pyarrow
