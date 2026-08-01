@@ -34,6 +34,15 @@ from pipeline.silver.quarantine import (
     create_quarantine_record,
 )
 
+from pipeline.common.lineage import (
+    create_lineage_record,
+    write_lineage_record,
+)
+from pipeline.silver.bronze_run_selector import (
+    list_objects_for_bronze_run,
+    select_latest_bronze_run_id,
+)
+
 
 JOB_NAME = "silver_field_observations"
 JOB_VERSION = "2.0.0"
@@ -51,31 +60,6 @@ def utc_now() -> str:
     return datetime.now(timezone.utc).isoformat()
 
 
-def list_bronze_objects(
-    minio_client: Any,
-) -> List[str]:
-    """
-    Find all V2 Bronze JSONL objects for the current source.
-    """
-
-    prefix = (
-        f"{BRONZE_PREFIX}/"
-        f"source={SOURCE_SYSTEM}/"
-    )
-
-    objects = minio_client.list_objects(
-        bucket_name=MINIO_BUCKET,
-        prefix=prefix,
-        recursive=True,
-    )
-
-    object_names = []
-
-    for obj in objects:
-        if obj.object_name.endswith(".jsonl"):
-            object_names.append(obj.object_name)
-
-    return sorted(object_names)
 
 
 def read_bronze_object(
@@ -661,6 +645,8 @@ def main() -> None:
 
     input_objects = []
     output_objects = []
+    bronze_run_id = ""
+
 
     started_manifest = create_manifest(
         run_context=run_context,
@@ -679,9 +665,19 @@ def main() -> None:
     print("Silver V2 processor started.")
     print(f"Run ID: {run_context.run_id}")
 
+   
+
     try:
-        input_objects = list_bronze_objects(
+        bronze_run_id = select_latest_bronze_run_id(
             minio_client
+        )
+        print(  
+            f"Selected Bronze run: {bronze_run_id}"
+        )
+        
+        input_objects = list_objects_for_bronze_run(
+            minio_client=minio_client,
+            bronze_run_id=bronze_run_id,
         )
 
         if not input_objects:
@@ -750,11 +746,35 @@ def main() -> None:
             output_zone="silver",
             input_objects=input_objects,
             output_objects=output_objects,
-            metrics=quality_metrics,
+            metrics={
+                **quality_metrics,
+                "bronze_run_id": bronze_run_id,
+            },
         )
 
         write_manifest(completed_manifest)
 
+        lineage_record = create_lineage_record(
+            run_id=run_context.run_id,
+            job_name=JOB_NAME,
+            input_zone="bronze",
+            output_zone="silver",
+            input_objects=input_objects,
+            output_objects=output_objects,
+            parent_run_ids=[
+                bronze_run_id,
+            ],
+            metrics=quality_metrics,
+        )
+
+        lineage_object = write_lineage_record(
+            lineage_record
+        )
+
+        print(
+            f"Silver lineage object: "
+            f"{lineage_object}"
+        )
         print("\nSilver V2 processing completed.")
         print(
             f"Input records: "
