@@ -71,6 +71,26 @@ MINIO_SECURE = get_boolean_env("MINIO_SECURE", default=False)
 KAFKA_SERVER = get_required_env("KAFKA_SERVER")
 KAFKA_TOPIC = get_required_env("KAFKA_TOPIC")
 
+SOURCE_SYSTEM = get_required_env("SOURCE_SYSTEM")
+SOURCE_TYPE = get_required_env("SOURCE_TYPE")
+SOURCE_FORMAT = get_required_env("SOURCE_FORMAT")
+SOURCE_SCHEMA_VERSION = get_required_env(
+    "SOURCE_SCHEMA_VERSION"
+)
+
+KAFKA_CONSUMER_GROUP = get_required_env(
+    "KAFKA_CONSUMER_GROUP"
+)
+
+BRONZE_BATCH_SIZE = int(
+    get_required_env("BRONZE_BATCH_SIZE")
+)
+
+if BRONZE_BATCH_SIZE <= 0:
+    raise ValueError(
+        "BRONZE_BATCH_SIZE must be greater than zero."
+    )
+
 
 # Medallion and metadata prefixes inside the MinIO bucket.
 BRONZE_PREFIX = "bronze"
