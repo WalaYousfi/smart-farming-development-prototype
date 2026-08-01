@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "crop_yield_csv.schema.json",
+  "title": "Smart Farming Crop Yield CSV Source",
+  "description": "Schema describing records from Smart_Farming_Crop_Yield_2024.csv.",
+  "type": "object",
+  "required": [
+    "farm_id",
+    "region",
+    "crop_type",
+    "soil_moisture_%",
+    "soil_pH",
+    "temperature_C",
+    "rainfall_mm",
+    "humidity_%",
+    "sunlight_hours",
+    "sensor_id",
+    "timestamp",
+    "latitude",
+    "longitude",
+    "NDVI_index"
+  ],
+  "properties": {
+    "farm_id": {
+      "type": ["string", "number"]
+    },
+    "region": {
+      "type": ["string", "null"]
+    },
+    "crop_type": {
+      "type": ["string", "null"]
+    },
+    "soil_moisture_%": {
+      "type": ["string", "number"]
+    },
+    "soil_pH": {
+      "type": ["string", "number"]
+    },
+    "temperature_C": {
+      "type": ["string", "number"]
+    },
+    "rainfall_mm": {
+      "type": ["string", "number"]
+    },
+    "humidity_%": {
+      "type": ["string", "number"]
+    },
+    "sunlight_hours": {
+      "type": ["string", "number"]
+    },
+    "irrigation_type": {
+      "type": ["string", "null"]
+    },
+    "fertilizer_type": {
+      "type": ["string", "null"]
+    },
+    "pesticide_usage_ml": {
+      "type": ["string", "number", "null"]
+    },
+    "sowing_date": {
+      "type": ["string", "null"]
+    },
+    "harvest_date": {
+      "type": ["string", "null"]
+    },
+    "total_days": {
+      "type": ["string", "number", "null"]
+    },
+    "yield_kg_per_hectare": {
+      "type": ["string", "number", "null"]
+    },
+    "sensor_id": {
+      "type": ["string", "number"]
+    },
+    "timestamp": {
+      "type": ["string", "null"]
+    },
+    "latitude": {
+      "type": ["string", "number"]
+    },
+    "longitude": {
+      "type": ["string", "number"]
+    },
+    "NDVI_index": {
+      "type": ["string", "number"]
+    },
+    "crop_disease_status": {
+      "type": ["string", "null"]
+    }
+  },
+  "additionalProperties": true
+}

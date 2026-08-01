@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "field_observation_v1.schema.json",
+  "title": "Canonical Agricultural Field Observation",
+  "description": "Trusted Silver-layer representation of an agricultural field observation.",
+  "type": "object",
+  "required": [
+    "observation_id",
+    "farm_id",
+    "sensor_id",
+    "observed_at",
+    "soil_moisture_percentage",
+    "soil_ph",
+    "temperature_celsius",
+    "rainfall_millimeters",
+    "humidity_percentage",
+    "sunlight_hours",
+    "ndvi_index",
+    "source_system",
+    "source_event_id",
+    "processing_run_id",
+    "quality_status"
+  ],
+  "properties": {
+    "observation_id": {
+      "type": "string"
+    },
+    "farm_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sensor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "region": {
+      "type": ["string", "null"]
+    },
+    "crop_type": {
+      "type": ["string", "null"]
+    },
+    "latitude": {
+      "type": ["number", "null"],
+      "minimum": -90,
+      "maximum": 90
+    },
+    "longitude": {
+      "type": ["number", "null"],
+      "minimum": -180,
+      "maximum": 180
+    },
+    "soil_moisture_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "soil_ph": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 14
+    },
+    "temperature_celsius": {
+      "type": "number"
+    },
+    "rainfall_millimeters": {
+      "type": "number",
+      "minimum": 0
+    },
+    "humidity_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "sunlight_hours": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 24
+    },
+    "irrigation_type": {
+      "type": ["string", "null"]
+    },
+    "fertilizer_type": {
+      "type": ["string", "null"]
+    },
+    "pesticide_usage_milliliters": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "ndvi_index": {
+      "type": "number",
+      "minimum": -1,
+      "maximum": 1
+    },
+    "crop_disease_status": {
+      "type": ["string", "null"]
+    },
+    "total_days": {
+      "type": ["integer", "null"],
+      "minimum": 0
+    },
+    "yield_kg_per_hectare": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "source_system": {
+      "type": "string"
+    },
+    "source_event_id": {
+      "type": "string"
+    },
+    "source_schema_version": {
+      "type": "string"
+    },
+    "bronze_ingestion_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processing_run_id": {
+      "type": "string"
+    },
+    "silver_processing_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quality_status": {
+      "type": "string",
+      "enum": ["accepted", "quarantined"]
+    }
+  },
+  "additionalProperties": false
+}
