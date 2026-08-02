@@ -8,7 +8,8 @@
   "type": "module",
   "scripts": {
     "produce": "node pipeline/ingestion/agricultural_producer.js",
-    "produce:test-invalid": "node pipeline/ingestion/invalid_test_producer.js"
+    "produce:test-invalid": "node pipeline/ingestion/invalid_test_producer.js",
+    "produce:weather": "node pipeline/ingestion/weather_producer.js"
   },
   "keywords": [],
   "author": "",
