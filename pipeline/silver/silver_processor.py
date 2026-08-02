@@ -1,3 +1,5 @@
+import argparse
+
 from datetime import datetime, timezone
 from io import BytesIO
 import json
@@ -47,6 +49,7 @@ from pipeline.silver.bronze_run_selector import (
 JOB_NAME = "silver_field_observations"
 JOB_VERSION = "2.0.0"
 
+
 SOURCE_SCHEMA_PATH = (
     "source/crop_yield_csv.schema.json"
 )
@@ -54,6 +57,30 @@ SOURCE_SCHEMA_PATH = (
 CANONICAL_SCHEMA_PATH = (
     "canonical/field_observation_v1.schema.json"
 )
+
+def parse_arguments() -> argparse.Namespace:
+    """
+    Read optional command-line arguments.
+    """
+
+    parser = argparse.ArgumentParser(
+        description=(
+            "Transform one Bronze ingestion run "
+            "into canonical Silver outputs."
+        )
+    )
+
+    parser.add_argument(
+        "--bronze-run-id",
+        type=str,
+        default=None,
+        help=(
+            "Bronze run ID to process. "
+            "When omitted, the latest Bronze run is used."
+        ),
+    )
+
+    return parser.parse_args()
 
 
 def utc_now() -> str:
@@ -635,6 +662,8 @@ def upload_quality_report(
 
 
 def main() -> None:
+    arguments = parse_arguments()
+
     run_context = create_run_context(
         job_name=JOB_NAME,
         job_version=JOB_VERSION,
@@ -667,13 +696,32 @@ def main() -> None:
 
    
 
-    try:
+    if arguments.bronze_run_id:
+        bronze_run_id = arguments.bronze_run_id
+
+        print(
+            "Using explicitly requested Bronze run: "
+            f"{bronze_run_id}"
+        )
+
+    else:
         bronze_run_id = select_latest_bronze_run_id(
             minio_client
         )
-        print(  
-            f"Selected Bronze run: {bronze_run_id}"
+
+        print(
+            "No Bronze run was specified."
         )
+        print(
+            f"Using latest Bronze run: {bronze_run_id}"
+        )
+
+        selection_mode = (
+        "explicit"
+        if arguments.bronze_run_id
+        else "latest"
+        )   
+
         
         input_objects = list_objects_for_bronze_run(
             minio_client=minio_client,
@@ -749,6 +797,7 @@ def main() -> None:
             metrics={
                 **quality_metrics,
                 "bronze_run_id": bronze_run_id,
+                "bronze_run_selection_mode": selection_mode,
             },
         )
 
@@ -764,7 +813,10 @@ def main() -> None:
             parent_run_ids=[
                 bronze_run_id,
             ],
-            metrics=quality_metrics,
+            metrics={
+                **quality_metrics,
+                "bronze_run_selection_mode": selection_mode,
+            },
         )
 
         lineage_object = write_lineage_record(
@@ -793,16 +845,16 @@ def main() -> None:
             f"{quality_metrics['overall_quality_score']}"
         )
 
-    except Exception as error:
-        failed_manifest = create_manifest(
-            run_context=run_context,
-            status="failed",
-            input_zone="bronze",
-            output_zone="silver",
-            input_objects=input_objects,
-            output_objects=output_objects,
-            error_message=str(error),
-        )
+        except Exception as error:
+            failed_manifest = create_manifest(
+                run_context=run_context,
+                status="failed",
+                input_zone="bronze",
+                output_zone="silver",
+                input_objects=input_objects,
+                output_objects=output_objects,
+                error_message=str(error),
+            )
 
         try:
             write_manifest(failed_manifest)
