@@ -45,6 +45,10 @@ from pipeline.silver.bronze_run_selector import (
     select_latest_bronze_run_id,
 )
 
+from pipeline.silver.processing_guard import (
+    check_bronze_run_processing,
+)
+
 
 JOB_NAME = "silver_field_observations"
 JOB_VERSION = "2.0.0"
@@ -77,6 +81,15 @@ def parse_arguments() -> argparse.Namespace:
         help=(
             "Bronze run ID to process. "
             "When omitted, the latest Bronze run is used."
+        ),
+    )
+
+    parser.add_argument(
+        "--force",
+        action="store_true",
+        help=(
+            "Allow intentional reprocessing when the "
+            "selected Bronze run was already processed."
         ),
     )
 
@@ -720,6 +733,27 @@ def main() -> None:
             else "latest"
         )
 
+
+        previous_silver_runs = (
+            check_bronze_run_processing(
+                minio_client=minio_client,
+                bronze_run_id=bronze_run_id,
+                force=arguments.force,
+            )
+        )
+
+        if previous_silver_runs and arguments.force:
+            print(
+                "Force mode enabled."
+            )
+            print(
+                "This Bronze run was previously processed "
+                f"{len(previous_silver_runs)} time(s)."
+            )
+            print(
+                "A new Silver run will be created."
+            )
+
         # Read only the selected Bronze run.
         input_objects = list_objects_for_bronze_run(
             minio_client=minio_client,
@@ -787,7 +821,20 @@ def main() -> None:
             metrics={
                 **quality_metrics,
                 "bronze_run_id": bronze_run_id,
-                "bronze_run_selection_mode": selection_mode,
+                "bronze_run_selection_mode": (
+                    selection_mode
+                ),
+                "forced_reprocessing": (
+                    arguments.force
+                ),
+                "previous_silver_run_count": len(
+                    previous_silver_runs
+                ),
+                "previous_silver_run_ids": [
+                    previous_run["silver_run_id"]
+                    for previous_run
+                    in previous_silver_runs
+                ],
             },
         )
 
@@ -805,7 +852,17 @@ def main() -> None:
             ],
             metrics={
                 **quality_metrics,
-                "bronze_run_selection_mode": selection_mode,
+                "bronze_run_selection_mode": (
+                    selection_mode
+                ),
+                "forced_reprocessing": (
+                    arguments.force
+                ),
+                "previous_silver_run_ids": [
+                    previous_run["silver_run_id"]
+                    for previous_run
+                    in previous_silver_runs
+                ],
             },
         )
 
