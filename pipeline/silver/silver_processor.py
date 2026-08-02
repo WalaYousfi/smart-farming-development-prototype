@@ -660,7 +660,6 @@ def upload_quality_report(
 
     return object_name
 
-
 def main() -> None:
     arguments = parse_arguments()
 
@@ -675,7 +674,7 @@ def main() -> None:
     input_objects = []
     output_objects = []
     bronze_run_id = ""
-
+    selection_mode = ""
 
     started_manifest = create_manifest(
         run_context=run_context,
@@ -694,35 +693,34 @@ def main() -> None:
     print("Silver V2 processor started.")
     print(f"Run ID: {run_context.run_id}")
 
-   
+    try:
+        # Choose the Bronze run.
+        if arguments.bronze_run_id:
+            bronze_run_id = arguments.bronze_run_id
 
-    if arguments.bronze_run_id:
-        bronze_run_id = arguments.bronze_run_id
+            print(
+                "Using explicitly requested Bronze run: "
+                f"{bronze_run_id}"
+            )
 
-        print(
-            "Using explicitly requested Bronze run: "
-            f"{bronze_run_id}"
-        )
+        else:
+            bronze_run_id = select_latest_bronze_run_id(
+                minio_client
+            )
 
-    else:
-        bronze_run_id = select_latest_bronze_run_id(
-            minio_client
-        )
+            print("No Bronze run was specified.")
+            print(
+                f"Using latest Bronze run: {bronze_run_id}"
+            )
 
-        print(
-            "No Bronze run was specified."
-        )
-        print(
-            f"Using latest Bronze run: {bronze_run_id}"
-        )
-
+        # Must be outside the if/else block.
         selection_mode = (
-        "explicit"
-        if arguments.bronze_run_id
-        else "latest"
-        )   
+            "explicit"
+            if arguments.bronze_run_id
+            else "latest"
+        )
 
-        
+        # Read only the selected Bronze run.
         input_objects = list_objects_for_bronze_run(
             minio_client=minio_client,
             bronze_run_id=bronze_run_id,
@@ -756,36 +754,28 @@ def main() -> None:
         if accepted_object:
             output_objects.append(accepted_object)
 
-        quarantine_object = (
-            upload_quarantine_records(
-                minio_client=minio_client,
-                quarantine_records=quarantine_records,
-                run_id=run_context.run_id,
-            )
+        quarantine_object = upload_quarantine_records(
+            minio_client=minio_client,
+            quarantine_records=quarantine_records,
+            run_id=run_context.run_id,
         )
 
         if quarantine_object:
-            output_objects.append(
-                quarantine_object
-            )
+            output_objects.append(quarantine_object)
 
-        quality_metrics = (
-            calculate_quality_metrics(counters)
+        quality_metrics = calculate_quality_metrics(
+            counters
         )
 
-        quality_report_object = (
-            upload_quality_report(
-                minio_client=minio_client,
-                run_id=run_context.run_id,
-                metrics=quality_metrics,
-                input_objects=input_objects,
-                output_objects=output_objects,
-            )
+        quality_report_object = upload_quality_report(
+            minio_client=minio_client,
+            run_id=run_context.run_id,
+            metrics=quality_metrics,
+            input_objects=input_objects,
+            output_objects=output_objects,
         )
 
-        output_objects.append(
-            quality_report_object
-        )
+        output_objects.append(quality_report_object)
 
         completed_manifest = create_manifest(
             run_context=run_context,
@@ -824,9 +814,9 @@ def main() -> None:
         )
 
         print(
-            f"Silver lineage object: "
-            f"{lineage_object}"
+            f"Silver lineage object: {lineage_object}"
         )
+
         print("\nSilver V2 processing completed.")
         print(
             f"Input records: "
@@ -845,19 +835,24 @@ def main() -> None:
             f"{quality_metrics['overall_quality_score']}"
         )
 
-        except Exception as error:
-            failed_manifest = create_manifest(
-                run_context=run_context,
-                status="failed",
-                input_zone="bronze",
-                output_zone="silver",
-                input_objects=input_objects,
-                output_objects=output_objects,
-                error_message=str(error),
-            )
+    except Exception as error:
+        failed_manifest = create_manifest(
+            run_context=run_context,
+            status="failed",
+            input_zone="bronze",
+            output_zone="silver",
+            input_objects=input_objects,
+            output_objects=output_objects,
+            metrics={
+                "bronze_run_id": bronze_run_id,
+                "bronze_run_selection_mode": selection_mode,
+            },
+            error_message=str(error),
+        )
 
         try:
             write_manifest(failed_manifest)
+
         except Exception as manifest_error:
             print(
                 "Failed to store failure manifest:",
@@ -865,7 +860,6 @@ def main() -> None:
             )
 
         raise
-
 
 if __name__ == "__main__":
     main()
