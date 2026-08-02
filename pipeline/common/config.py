@@ -78,6 +78,30 @@ SOURCE_SCHEMA_VERSION = get_required_env(
     "SOURCE_SCHEMA_VERSION"
 )
 
+WEATHER_KAFKA_TOPIC = get_required_env(
+    "WEATHER_KAFKA_TOPIC"
+)
+
+WEATHER_SOURCE_SYSTEM = get_required_env(
+    "WEATHER_SOURCE_SYSTEM"
+)
+
+WEATHER_SOURCE_TYPE = get_required_env(
+    "WEATHER_SOURCE_TYPE"
+)
+
+WEATHER_SOURCE_FORMAT = get_required_env(
+    "WEATHER_SOURCE_FORMAT"
+)
+
+WEATHER_SOURCE_SCHEMA_VERSION = get_required_env(
+    "WEATHER_SOURCE_SCHEMA_VERSION"
+)
+
+WEATHER_CONSUMER_GROUP = get_required_env(
+    "WEATHER_CONSUMER_GROUP"
+)
+
 KAFKA_CONSUMER_GROUP = get_required_env(
     "KAFKA_CONSUMER_GROUP"
 )

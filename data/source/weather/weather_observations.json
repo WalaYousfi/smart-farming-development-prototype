@@ -1,0 +1,67 @@
+[
+  {
+    "weather_station_id": "WS-001",
+    "farm_id": "FARM0001",
+    "observed_at": "2024-03-19T10:00:00Z",
+    "air_temperature_celsius": 17.79,
+    "relative_humidity_percentage": 77.03,
+    "rainfall_millimeters": 75.62,
+    "sunlight_duration_hours": 7.27,
+    "wind_speed_kmh": 13.4,
+    "atmospheric_pressure_hpa": 1012.6,
+    "latitude": 28.61,
+    "longitude": 77.20
+  },
+  {
+    "weather_station_id": "WS-002",
+    "farm_id": "FARM0002",
+    "observed_at": "2024-03-20T11:00:00Z",
+    "air_temperature_celsius": 24.35,
+    "relative_humidity_percentage": 65.21,
+    "rainfall_millimeters": 18.40,
+    "sunlight_duration_hours": 8.35,
+    "wind_speed_kmh": 9.8,
+    "atmospheric_pressure_hpa": 1008.9,
+    "latitude": 32.77,
+    "longitude": -96.79
+  },
+  {
+    "weather_station_id": "WS-003",
+    "farm_id": "FARM0003",
+    "observed_at": "2024-03-21T12:00:00Z",
+    "air_temperature_celsius": 31.10,
+    "relative_humidity_percentage": 51.80,
+    "rainfall_millimeters": 2.30,
+    "sunlight_duration_hours": 9.10,
+    "wind_speed_kmh": 17.2,
+    "atmospheric_pressure_hpa": 1005.4,
+    "latitude": 29.76,
+    "longitude": -95.37
+  },
+  {
+    "weather_station_id": "WS-004",
+    "farm_id": "FARM0004",
+    "observed_at": "2024-03-22T13:00:00Z",
+    "air_temperature_celsius": 20.45,
+    "relative_humidity_percentage": 82.60,
+    "rainfall_millimeters": 124.80,
+    "sunlight_duration_hours": 4.75,
+    "wind_speed_kmh": 21.5,
+    "atmospheric_pressure_hpa": 998.7,
+    "latitude": 41.88,
+    "longitude": -87.63
+  },
+  {
+    "weather_station_id": "WS-005",
+    "farm_id": "FARM0005",
+    "observed_at": "2024-03-23T14:00:00Z",
+    "air_temperature_celsius": 27.60,
+    "relative_humidity_percentage": 59.30,
+    "rainfall_millimeters": 10.20,
+    "sunlight_duration_hours": 8.80,
+    "wind_speed_kmh": 11.1,
+    "atmospheric_pressure_hpa": 1015.2,
+    "latitude": 39.10,
+    "longitude": -94.58
+  }
+]

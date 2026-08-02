@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weather_observation_json.schema.json",
+  "title": "Farm Weather Station Observation",
+  "description": "Source schema for JSON weather observations produced by simulated farm weather stations.",
+  "type": "object",
+  "required": [
+    "weather_station_id",
+    "farm_id",
+    "observed_at",
+    "air_temperature_celsius",
+    "relative_humidity_percentage",
+    "rainfall_millimeters",
+    "sunlight_duration_hours",
+    "latitude",
+    "longitude"
+  ],
+  "properties": {
+    "weather_station_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "farm_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "air_temperature_celsius": {
+      "type": "number"
+    },
+    "relative_humidity_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "rainfall_millimeters": {
+      "type": "number",
+      "minimum": 0
+    },
+    "sunlight_duration_hours": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 24
+    },
+    "wind_speed_kmh": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "atmospheric_pressure_hpa": {
+      "type": ["number", "null"],
+      "minimum": 800,
+      "maximum": 1200
+    },
+    "latitude": {
+      "type": "number",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "longitude": {
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180
+    }
+  },
+  "additionalProperties": false
+}
