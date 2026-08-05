@@ -26,7 +26,7 @@ def test_weather_source_schema() -> None:
         "source/weather_observation_json.schema.json"
     )
 
-    assert len(records) == 5
+    assert len(records) == 500
 
     for index, record in enumerate(
         records,
