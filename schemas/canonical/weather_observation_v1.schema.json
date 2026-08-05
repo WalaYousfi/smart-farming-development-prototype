@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weather_observation_v1.schema.json",
+  "title": "Canonical Agricultural Weather Observation",
+  "description": "Trusted Silver representation of a weather observation linked to an agricultural farm.",
+  "type": "object",
+  "required": [
+    "weather_observation_id",
+    "farm_id",
+    "weather_station_id",
+    "observed_at",
+    "temperature_celsius",
+    "humidity_percentage",
+    "rainfall_millimeters",
+    "sunlight_hours",
+    "latitude",
+    "longitude",
+    "source_system",
+    "source_event_id",
+    "source_schema_version",
+    "bronze_ingestion_timestamp",
+    "processing_run_id",
+    "silver_processing_timestamp",
+    "quality_status"
+  ],
+  "properties": {
+    "weather_observation_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "farm_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "weather_station_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "temperature_celsius": {
+      "type": "number"
+    },
+    "humidity_percentage": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "rainfall_millimeters": {
+      "type": "number",
+      "minimum": 0
+    },
+    "sunlight_hours": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 24
+    },
+    "wind_speed_kmh": {
+      "type": ["number", "null"],
+      "minimum": 0
+    },
+    "atmospheric_pressure_hpa": {
+      "type": ["number", "null"],
+      "minimum": 800,
+      "maximum": 1200
+    },
+    "latitude": {
+      "type": "number",
+      "minimum": -90,
+      "maximum": 90
+    },
+    "longitude": {
+      "type": "number",
+      "minimum": -180,
+      "maximum": 180
+    },
+    "source_system": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_event_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "source_schema_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "bronze_ingestion_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "processing_run_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "silver_processing_timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "quality_status": {
+      "type": "string",
+      "enum": [
+        "accepted",
+        "quarantined"
+      ]
+    }
+  },
+  "additionalProperties": false
+}
