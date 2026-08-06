@@ -1,0 +1,220 @@
+{
+  "experiment_name": "timing-test-3-runs",
+  "experiment_type": "repeated_integration_and_gold_timing",
+  "architecture": "proposed dual-dimensional V2",
+  "started_at": "2026-08-06T22:52:56.839104+00:00",
+  "completed_at": "2026-08-06T22:53:21.803227+00:00",
+  "configuration": {
+    "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+    "weather_silver_run_id": "20260806T204335Z_35758ca5",
+    "requested_repetitions": 3,
+    "contamination": 0.05,
+    "python_executable": "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
+  },
+  "summary": {
+    "completed_repetitions": 3,
+    "integration_duration_seconds": {
+      "count": 3,
+      "mean": 2.8349,
+      "median": 2.7388,
+      "minimum": 2.6726,
+      "maximum": 3.0933,
+      "standard_deviation": 0.2262
+    },
+    "gold_duration_seconds": {
+      "count": 3,
+      "mean": 5.4846,
+      "median": 5.4174,
+      "minimum": 5.2804,
+      "maximum": 5.756,
+      "standard_deviation": 0.2448
+    },
+    "total_duration_seconds": {
+      "count": 3,
+      "mean": 8.3195,
+      "median": 8.1562,
+      "minimum": 7.953,
+      "maximum": 8.8493,
+      "standard_deviation": 0.4699
+    }
+  },
+  "repetitions": [
+    {
+      "repetition": 1,
+      "started_at": "2026-08-06T22:52:56.839685+00:00",
+      "completed_at": "2026-08-06T22:53:05.685301+00:00",
+      "input_runs": {
+        "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+        "weather_silver_run_id": "20260806T204335Z_35758ca5"
+      },
+      "generated_runs": {
+        "integration_run_id": "20260806T225259Z_a5d58424",
+        "integrated_gold_run_id": "20260806T225303Z_5cacfc2d"
+      },
+      "durations": {
+        "integration_seconds": 3.0933,
+        "gold_seconds": 5.756,
+        "total_seconds": 8.8493
+      },
+      "steps": {
+        "integration": {
+          "step_name": "field_weather_integration",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.integration.field_weather_integration",
+            "--field-silver-run-id",
+            "20260802T021538Z_b4e37a7a",
+            "--weather-silver-run-id",
+            "20260806T204335Z_35758ca5"
+          ],
+          "started_at": "2026-08-06T22:52:56.839685+00:00",
+          "completed_at": "2026-08-06T22:52:59.931674+00:00",
+          "duration_seconds": 3.0933,
+          "return_code": 0,
+          "stdout": "Field-Weather integration started.\nIntegration run ID: 20260806T225259Z_a5d58424\nUsing requested Field Silver run: 20260802T021538Z_b4e37a7a\nUsing requested Weather Silver run: 20260806T204335Z_35758ca5\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225259Z_a5d58424/manifest_started.json\nReading Silver object: silver/accepted/field_observations/run_id=20260802T021538Z_b4e37a7a/field_observations.parquet\nReading Silver object: silver/accepted/weather_observations/run_id=20260806T204335Z_35758ca5/weather_observations.parquet\nIntegrated Silver stored: silver/integrated/field_weather_observations/run_id=20260806T225259Z_a5d58424/integrated_observations.parquet\nIntegration quality report stored: metadata/quality-reports/silver/field_weather_integration/run_id=20260806T225259Z_a5d58424/quality_report.json\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225259Z_a5d58424/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/silver_field_weather_integration/run_id=20260806T225259Z_a5d58424/lineage.json\n\nIntegration completed.\nField records: 500\nWeather records: 500\nMatched field records: 500\nUnmatched field records: 0\nWeather match rate: 1.0\n",
+          "stderr": "",
+          "status": "completed"
+        },
+        "integrated_gold": {
+          "step_name": "integrated_gold_anomaly_detection",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.gold.integrated_anomaly_detection",
+            "--integration-run-id",
+            "20260806T225259Z_a5d58424",
+            "--contamination",
+            "0.05"
+          ],
+          "started_at": "2026-08-06T22:52:59.933686+00:00",
+          "completed_at": "2026-08-06T22:53:05.685301+00:00",
+          "duration_seconds": 5.756,
+          "return_code": 0,
+          "stdout": "Integrated Gold anomaly detection started.\nGold run ID: 20260806T225303Z_5cacfc2d\nUsing requested integration run: 20260806T225259Z_a5d58424\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225303Z_5cacfc2d/manifest_started.json\nReading integrated Silver object: silver/integrated/field_weather_observations/run_id=20260806T225259Z_a5d58424/integrated_observations.parquet\nIntegrated records loaded: 500\nGold Parquet stored: gold/analytical/integrated_field_weather_scores/run_id=20260806T225303Z_5cacfc2d/scored_integrated_observations.parquet\nGold Parquet stored: gold/data-products/integrated_field_weather_alerts/run_id=20260806T225303Z_5cacfc2d/alerts.parquet\nGold JSON stored: gold/data-products/integrated_anomaly_summary/run_id=20260806T225303Z_5cacfc2d/summary.json\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225303Z_5cacfc2d/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/gold_integrated_field_anomaly_detection/run_id=20260806T225303Z_5cacfc2d/lineage.json\n\nIntegrated Gold processing completed.\nTotal records: 500\nNormal records: 475\nAnomaly records: 25\nWeather-matched records: 500\nWeather-matched anomalies: 25\n",
+          "stderr": "",
+          "status": "completed"
+        }
+      },
+      "status": "completed"
+    },
+    {
+      "repetition": 2,
+      "started_at": "2026-08-06T22:53:05.685301+00:00",
+      "completed_at": "2026-08-06T22:53:13.843614+00:00",
+      "input_runs": {
+        "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+        "weather_silver_run_id": "20260806T204335Z_35758ca5"
+      },
+      "generated_runs": {
+        "integration_run_id": "20260806T225307Z_045939dd",
+        "integrated_gold_run_id": "20260806T225311Z_eefcc08b"
+      },
+      "durations": {
+        "integration_seconds": 2.7388,
+        "gold_seconds": 5.4174,
+        "total_seconds": 8.1562
+      },
+      "steps": {
+        "integration": {
+          "step_name": "field_weather_integration",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.integration.field_weather_integration",
+            "--field-silver-run-id",
+            "20260802T021538Z_b4e37a7a",
+            "--weather-silver-run-id",
+            "20260806T204335Z_35758ca5"
+          ],
+          "started_at": "2026-08-06T22:53:05.685301+00:00",
+          "completed_at": "2026-08-06T22:53:08.428272+00:00",
+          "duration_seconds": 2.7388,
+          "return_code": 0,
+          "stdout": "Field-Weather integration started.\nIntegration run ID: 20260806T225307Z_045939dd\nUsing requested Field Silver run: 20260802T021538Z_b4e37a7a\nUsing requested Weather Silver run: 20260806T204335Z_35758ca5\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225307Z_045939dd/manifest_started.json\nReading Silver object: silver/accepted/field_observations/run_id=20260802T021538Z_b4e37a7a/field_observations.parquet\nReading Silver object: silver/accepted/weather_observations/run_id=20260806T204335Z_35758ca5/weather_observations.parquet\nIntegrated Silver stored: silver/integrated/field_weather_observations/run_id=20260806T225307Z_045939dd/integrated_observations.parquet\nIntegration quality report stored: metadata/quality-reports/silver/field_weather_integration/run_id=20260806T225307Z_045939dd/quality_report.json\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225307Z_045939dd/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/silver_field_weather_integration/run_id=20260806T225307Z_045939dd/lineage.json\n\nIntegration completed.\nField records: 500\nWeather records: 500\nMatched field records: 500\nUnmatched field records: 0\nWeather match rate: 1.0\n",
+          "stderr": "",
+          "status": "completed"
+        },
+        "integrated_gold": {
+          "step_name": "integrated_gold_anomaly_detection",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.gold.integrated_anomaly_detection",
+            "--integration-run-id",
+            "20260806T225307Z_045939dd",
+            "--contamination",
+            "0.05"
+          ],
+          "started_at": "2026-08-06T22:53:08.428272+00:00",
+          "completed_at": "2026-08-06T22:53:13.843614+00:00",
+          "duration_seconds": 5.4174,
+          "return_code": 0,
+          "stdout": "Integrated Gold anomaly detection started.\nGold run ID: 20260806T225311Z_eefcc08b\nUsing requested integration run: 20260806T225307Z_045939dd\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225311Z_eefcc08b/manifest_started.json\nReading integrated Silver object: silver/integrated/field_weather_observations/run_id=20260806T225307Z_045939dd/integrated_observations.parquet\nIntegrated records loaded: 500\nGold Parquet stored: gold/analytical/integrated_field_weather_scores/run_id=20260806T225311Z_eefcc08b/scored_integrated_observations.parquet\nGold Parquet stored: gold/data-products/integrated_field_weather_alerts/run_id=20260806T225311Z_eefcc08b/alerts.parquet\nGold JSON stored: gold/data-products/integrated_anomaly_summary/run_id=20260806T225311Z_eefcc08b/summary.json\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225311Z_eefcc08b/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/gold_integrated_field_anomaly_detection/run_id=20260806T225311Z_eefcc08b/lineage.json\n\nIntegrated Gold processing completed.\nTotal records: 500\nNormal records: 475\nAnomaly records: 25\nWeather-matched records: 500\nWeather-matched anomalies: 25\n",
+          "stderr": "",
+          "status": "completed"
+        }
+      },
+      "status": "completed"
+    },
+    {
+      "repetition": 3,
+      "started_at": "2026-08-06T22:53:13.848695+00:00",
+      "completed_at": "2026-08-06T22:53:21.803227+00:00",
+      "input_runs": {
+        "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+        "weather_silver_run_id": "20260806T204335Z_35758ca5"
+      },
+      "generated_runs": {
+        "integration_run_id": "20260806T225315Z_741680e9",
+        "integrated_gold_run_id": "20260806T225319Z_56f33d29"
+      },
+      "durations": {
+        "integration_seconds": 2.6726,
+        "gold_seconds": 5.2804,
+        "total_seconds": 7.953
+      },
+      "steps": {
+        "integration": {
+          "step_name": "field_weather_integration",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.integration.field_weather_integration",
+            "--field-silver-run-id",
+            "20260802T021538Z_b4e37a7a",
+            "--weather-silver-run-id",
+            "20260806T204335Z_35758ca5"
+          ],
+          "started_at": "2026-08-06T22:53:13.848695+00:00",
+          "completed_at": "2026-08-06T22:53:16.514877+00:00",
+          "duration_seconds": 2.6726,
+          "return_code": 0,
+          "stdout": "Field-Weather integration started.\nIntegration run ID: 20260806T225315Z_741680e9\nUsing requested Field Silver run: 20260802T021538Z_b4e37a7a\nUsing requested Weather Silver run: 20260806T204335Z_35758ca5\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225315Z_741680e9/manifest_started.json\nReading Silver object: silver/accepted/field_observations/run_id=20260802T021538Z_b4e37a7a/field_observations.parquet\nReading Silver object: silver/accepted/weather_observations/run_id=20260806T204335Z_35758ca5/weather_observations.parquet\nIntegrated Silver stored: silver/integrated/field_weather_observations/run_id=20260806T225315Z_741680e9/integrated_observations.parquet\nIntegration quality report stored: metadata/quality-reports/silver/field_weather_integration/run_id=20260806T225315Z_741680e9/quality_report.json\nManifest stored: smart-farming-v2/metadata/manifests/silver_field_weather_integration/run_id=20260806T225315Z_741680e9/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/silver_field_weather_integration/run_id=20260806T225315Z_741680e9/lineage.json\n\nIntegration completed.\nField records: 500\nWeather records: 500\nMatched field records: 500\nUnmatched field records: 0\nWeather match rate: 1.0\n",
+          "stderr": "",
+          "status": "completed"
+        },
+        "integrated_gold": {
+          "step_name": "integrated_gold_anomaly_detection",
+          "command": [
+            "C:\\Users\\wyous\\AppData\\Local\\Programs\\Python\\Python37\\python.exe",
+            "-m",
+            "pipeline.gold.integrated_anomaly_detection",
+            "--integration-run-id",
+            "20260806T225315Z_741680e9",
+            "--contamination",
+            "0.05"
+          ],
+          "started_at": "2026-08-06T22:53:16.523182+00:00",
+          "completed_at": "2026-08-06T22:53:21.803227+00:00",
+          "duration_seconds": 5.2804,
+          "return_code": 0,
+          "stdout": "Integrated Gold anomaly detection started.\nGold run ID: 20260806T225319Z_56f33d29\nUsing requested integration run: 20260806T225315Z_741680e9\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225319Z_56f33d29/manifest_started.json\nReading integrated Silver object: silver/integrated/field_weather_observations/run_id=20260806T225315Z_741680e9/integrated_observations.parquet\nIntegrated records loaded: 500\nGold Parquet stored: gold/analytical/integrated_field_weather_scores/run_id=20260806T225319Z_56f33d29/scored_integrated_observations.parquet\nGold Parquet stored: gold/data-products/integrated_field_weather_alerts/run_id=20260806T225319Z_56f33d29/alerts.parquet\nGold JSON stored: gold/data-products/integrated_anomaly_summary/run_id=20260806T225319Z_56f33d29/summary.json\nManifest stored: smart-farming-v2/metadata/manifests/gold_integrated_field_anomaly_detection/run_id=20260806T225319Z_56f33d29/manifest_completed.json\nLineage stored: smart-farming-v2/metadata/lineage/gold_integrated_field_anomaly_detection/run_id=20260806T225319Z_56f33d29/lineage.json\n\nIntegrated Gold processing completed.\nTotal records: 500\nNormal records: 475\nAnomaly records: 25\nWeather-matched records: 500\nWeather-matched anomalies: 25\n",
+          "stderr": "",
+          "status": "completed"
+        }
+      },
+      "status": "completed"
+    }
+  ]
+}
