@@ -32,3 +32,38 @@ smart-farming/
     ├── schemas/
     ├── quality-reports/
     └── lineage/
+
+
+
+
+
+
+
+
+# Proposed Architecture
+
+## Motivation
+
+## Research Problem
+
+## Architecture Overview
+
+## Layered Architecture
+
+## Medallion Architecture
+
+## Why combine them?
+
+## Pipeline
+
+## Metadata
+
+## Lineage
+
+## Quality Reports
+
+## Canonical Schemas
+
+## AI Integration
+
+## Future Extensions    
