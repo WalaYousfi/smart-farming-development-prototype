@@ -1,0 +1,329 @@
+{
+  "experiment_name": "full-coverage-run-01",
+  "architecture": "dual-dimensional multi-layer and Medallion architecture",
+  "bucket": "smart-farming-v2",
+  "generated_at": "2026-08-06T22:20:55.099998+01:00",
+  "run_ids": {
+    "field_silver": "20260802T021538Z_b4e37a7a",
+    "weather_silver": "20260806T204335Z_35758ca5",
+    "integration": "20260806T205547Z_9f17a848",
+    "integrated_gold": "20260806T205739Z_b6a30bdd"
+  },
+  "summary": {
+    "measured_job_count": 4,
+    "total_measured_duration_seconds": 5.3661,
+    "total_output_storage_bytes": 606989,
+    "total_output_storage_megabytes": 0.5789,
+    "field_records": 500,
+    "weather_records": 500,
+    "integrated_records": 500,
+    "matched_records": 500,
+    "weather_match_rate": 1.0,
+    "normal_records": 475,
+    "anomaly_records": 25,
+    "anomaly_rate": 0.05,
+    "weather_matched_anomalies": 25,
+    "all_jobs_have_lineage": true
+  },
+  "jobs": {
+    "field_silver": {
+      "job_name": "silver_field_observations",
+      "run_id": "20260802T021538Z_b4e37a7a",
+      "job_version": "2.0.0",
+      "status": "completed",
+      "started_at": "2026-08-02T02:15:38.631521+00:00",
+      "completed_at": "2026-08-02T02:15:39.602745+00:00",
+      "duration_seconds": 0.9712,
+      "manifest_metrics": {
+        "input_records": 500,
+        "accepted_records": 500,
+        "quarantined_records": 0,
+        "duplicate_records": 0,
+        "json_read_failures": 0,
+        "source_schema_failures": 0,
+        "mapping_failures": 0,
+        "canonical_schema_failures": 0,
+        "acceptance_rate": 1.0,
+        "quarantine_rate": 0.0,
+        "uniqueness_score": 1.0,
+        "overall_quality_score": 1.0,
+        "bronze_run_id": "20260801T000837Z_fff15ee6",
+        "bronze_run_selection_mode": "explicit"
+      },
+      "input_storage": {
+        "object_count": 5,
+        "total_bytes": 515695,
+        "total_kilobytes": 503.608,
+        "total_megabytes": 0.4918,
+        "objects": [
+          {
+            "object_name": "bronze/source=smart_farming_crop_yield_csv/year=2026/month=08/day=01/run_id=20260801T000837Z_fff15ee6/partition=0/events_0_99.jsonl",
+            "size_bytes": 103081,
+            "size_kilobytes": 100.665
+          },
+          {
+            "object_name": "bronze/source=smart_farming_crop_yield_csv/year=2026/month=08/day=01/run_id=20260801T000837Z_fff15ee6/partition=0/events_100_199.jsonl",
+            "size_bytes": 103136,
+            "size_kilobytes": 100.719
+          },
+          {
+            "object_name": "bronze/source=smart_farming_crop_yield_csv/year=2026/month=08/day=01/run_id=20260801T000837Z_fff15ee6/partition=0/events_200_299.jsonl",
+            "size_bytes": 103200,
+            "size_kilobytes": 100.781
+          },
+          {
+            "object_name": "bronze/source=smart_farming_crop_yield_csv/year=2026/month=08/day=01/run_id=20260801T000837Z_fff15ee6/partition=0/events_300_399.jsonl",
+            "size_bytes": 103169,
+            "size_kilobytes": 100.751
+          },
+          {
+            "object_name": "bronze/source=smart_farming_crop_yield_csv/year=2026/month=08/day=01/run_id=20260801T000837Z_fff15ee6/partition=0/events_400_499.jsonl",
+            "size_bytes": 103109,
+            "size_kilobytes": 100.692
+          }
+        ]
+      },
+      "output_storage": {
+        "object_count": 2,
+        "total_bytes": 101837,
+        "total_kilobytes": 99.45,
+        "total_megabytes": 0.0971,
+        "objects": [
+          {
+            "object_name": "silver/accepted/field_observations/run_id=20260802T021538Z_b4e37a7a/field_observations.parquet",
+            "size_bytes": 100384,
+            "size_kilobytes": 98.031
+          },
+          {
+            "object_name": "metadata/quality-reports/silver/run_id=20260802T021538Z_b4e37a7a/quality_report.json",
+            "size_bytes": 1453,
+            "size_kilobytes": 1.419
+          }
+        ]
+      },
+      "lineage": {
+        "available": true,
+        "parent_run_count": 1,
+        "parent_run_ids": [
+          "20260801T000837Z_fff15ee6"
+        ]
+      }
+    },
+    "weather_silver": {
+      "job_name": "silver_weather_observations",
+      "run_id": "20260806T204335Z_35758ca5",
+      "job_version": "2.0.0",
+      "status": "completed",
+      "started_at": "2026-08-06T20:43:35.129459+00:00",
+      "completed_at": "2026-08-06T20:43:36.649128+00:00",
+      "duration_seconds": 1.5197,
+      "manifest_metrics": {
+        "input_records": 500,
+        "accepted_records": 500,
+        "quarantined_records": 0,
+        "duplicate_records": 0,
+        "json_read_failures": 0,
+        "bronze_envelope_failures": 0,
+        "source_schema_failures": 0,
+        "mapping_failures": 0,
+        "canonical_schema_failures": 0,
+        "acceptance_rate": 1.0,
+        "quarantine_rate": 0.0,
+        "uniqueness_score": 1.0,
+        "overall_quality_score": 1.0,
+        "bronze_run_id": "20260806T203839Z_8f848c8c",
+        "bronze_run_selection_mode": "explicit",
+        "source_system": "farm_weather_station"
+      },
+      "input_storage": {
+        "object_count": 5,
+        "total_bytes": 465554,
+        "total_kilobytes": 454.643,
+        "total_megabytes": 0.444,
+        "objects": [
+          {
+            "object_name": "bronze/source=farm_weather_station/year=2026/month=08/day=06/run_id=20260806T203839Z_8f848c8c/partition=0/events_0_99.jsonl",
+            "size_bytes": 93028,
+            "size_kilobytes": 90.848
+          },
+          {
+            "object_name": "bronze/source=farm_weather_station/year=2026/month=08/day=06/run_id=20260806T203839Z_8f848c8c/partition=0/events_100_199.jsonl",
+            "size_bytes": 93141,
+            "size_kilobytes": 90.958
+          },
+          {
+            "object_name": "bronze/source=farm_weather_station/year=2026/month=08/day=06/run_id=20260806T203839Z_8f848c8c/partition=0/events_200_299.jsonl",
+            "size_bytes": 93130,
+            "size_kilobytes": 90.947
+          },
+          {
+            "object_name": "bronze/source=farm_weather_station/year=2026/month=08/day=06/run_id=20260806T203839Z_8f848c8c/partition=0/events_300_399.jsonl",
+            "size_bytes": 93145,
+            "size_kilobytes": 90.962
+          },
+          {
+            "object_name": "bronze/source=farm_weather_station/year=2026/month=08/day=06/run_id=20260806T203839Z_8f848c8c/partition=0/events_400_499.jsonl",
+            "size_bytes": 93110,
+            "size_kilobytes": 90.928
+          }
+        ]
+      },
+      "output_storage": {
+        "object_count": 2,
+        "total_bytes": 86259,
+        "total_kilobytes": 84.237,
+        "total_megabytes": 0.0823,
+        "objects": [
+          {
+            "object_name": "silver/accepted/weather_observations/run_id=20260806T204335Z_35758ca5/weather_observations.parquet",
+            "size_bytes": 84762,
+            "size_kilobytes": 82.775
+          },
+          {
+            "object_name": "metadata/quality-reports/silver/weather_observations/run_id=20260806T204335Z_35758ca5/quality_report.json",
+            "size_bytes": 1497,
+            "size_kilobytes": 1.462
+          }
+        ]
+      },
+      "lineage": {
+        "available": true,
+        "parent_run_count": 1,
+        "parent_run_ids": [
+          "20260806T203839Z_8f848c8c"
+        ]
+      }
+    },
+    "integration": {
+      "job_name": "silver_field_weather_integration",
+      "run_id": "20260806T205547Z_9f17a848",
+      "job_version": "2.0.0",
+      "status": "completed",
+      "started_at": "2026-08-06T20:55:47.357596+00:00",
+      "completed_at": "2026-08-06T20:55:48.456288+00:00",
+      "duration_seconds": 1.0987,
+      "manifest_metrics": {
+        "field_input_records": 500,
+        "weather_input_records": 500,
+        "integrated_output_records": 500,
+        "matched_field_records": 500,
+        "unmatched_field_records": 0,
+        "weather_match_rate": 1.0,
+        "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+        "weather_silver_run_id": "20260806T204335Z_35758ca5"
+      },
+      "input_storage": {
+        "object_count": 2,
+        "total_bytes": 185146,
+        "total_kilobytes": 180.807,
+        "total_megabytes": 0.1766,
+        "objects": [
+          {
+            "object_name": "silver/accepted/field_observations/run_id=20260802T021538Z_b4e37a7a/field_observations.parquet",
+            "size_bytes": 100384,
+            "size_kilobytes": 98.031
+          },
+          {
+            "object_name": "silver/accepted/weather_observations/run_id=20260806T204335Z_35758ca5/weather_observations.parquet",
+            "size_bytes": 84762,
+            "size_kilobytes": 82.775
+          }
+        ]
+      },
+      "output_storage": {
+        "object_count": 2,
+        "total_bytes": 188606,
+        "total_kilobytes": 184.186,
+        "total_megabytes": 0.1799,
+        "objects": [
+          {
+            "object_name": "silver/integrated/field_weather_observations/run_id=20260806T205547Z_9f17a848/integrated_observations.parquet",
+            "size_bytes": 187770,
+            "size_kilobytes": 183.369
+          },
+          {
+            "object_name": "metadata/quality-reports/silver/field_weather_integration/run_id=20260806T205547Z_9f17a848/quality_report.json",
+            "size_bytes": 836,
+            "size_kilobytes": 0.816
+          }
+        ]
+      },
+      "lineage": {
+        "available": true,
+        "parent_run_count": 2,
+        "parent_run_ids": [
+          "20260802T021538Z_b4e37a7a",
+          "20260806T204335Z_35758ca5"
+        ]
+      }
+    },
+    "integrated_gold": {
+      "job_name": "gold_integrated_field_anomaly_detection",
+      "run_id": "20260806T205739Z_b6a30bdd",
+      "job_version": "2.0.0",
+      "status": "completed",
+      "started_at": "2026-08-06T20:57:39.921090+00:00",
+      "completed_at": "2026-08-06T20:57:41.697598+00:00",
+      "duration_seconds": 1.7765,
+      "manifest_metrics": {
+        "total_records": 500,
+        "normal_records": 475,
+        "anomaly_records": 25,
+        "anomaly_rate": 0.05,
+        "weather_matched_records": 500,
+        "weather_match_rate": 1.0,
+        "weather_matched_anomalies": 25,
+        "integration_run_id": "20260806T205547Z_9f17a848",
+        "field_silver_run_id": "20260802T021538Z_b4e37a7a",
+        "weather_silver_run_id": "20260806T204335Z_35758ca5",
+        "selection_mode": "explicit",
+        "model_name": "IsolationForest",
+        "model_version": "2.1.0",
+        "contamination": 0.05
+      },
+      "input_storage": {
+        "object_count": 1,
+        "total_bytes": 187770,
+        "total_kilobytes": 183.369,
+        "total_megabytes": 0.1791,
+        "objects": [
+          {
+            "object_name": "silver/integrated/field_weather_observations/run_id=20260806T205547Z_9f17a848/integrated_observations.parquet",
+            "size_bytes": 187770,
+            "size_kilobytes": 183.369
+          }
+        ]
+      },
+      "output_storage": {
+        "object_count": 3,
+        "total_bytes": 230287,
+        "total_kilobytes": 224.89,
+        "total_megabytes": 0.2196,
+        "objects": [
+          {
+            "object_name": "gold/analytical/integrated_field_weather_scores/run_id=20260806T205739Z_b6a30bdd/scored_integrated_observations.parquet",
+            "size_bytes": 198375,
+            "size_kilobytes": 193.726
+          },
+          {
+            "object_name": "gold/data-products/integrated_field_weather_alerts/run_id=20260806T205739Z_b6a30bdd/alerts.parquet",
+            "size_bytes": 30895,
+            "size_kilobytes": 30.171
+          },
+          {
+            "object_name": "gold/data-products/integrated_anomaly_summary/run_id=20260806T205739Z_b6a30bdd/summary.json",
+            "size_bytes": 1017,
+            "size_kilobytes": 0.993
+          }
+        ]
+      },
+      "lineage": {
+        "available": true,
+        "parent_run_count": 1,
+        "parent_run_ids": [
+          "20260806T205547Z_9f17a848"
+        ]
+      }
+    }
+  }
+}
